@@ -1,3 +1,7 @@
 {
-    "secret_key": "insert_secret_key_here"
+    "secret_key": "insert_secret_key_here",
+    "root_user": {
+        "username": "insert_username_here",
+        "password": "insert_password_here"
+    }
 }
