@@ -18,3 +18,5 @@ class Minter:
         self.settings = settings
 
     
+
+    

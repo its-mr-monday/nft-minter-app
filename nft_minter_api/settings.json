@@ -8,11 +8,15 @@
             "wallet_id": "root_wallet"
         }
     },
-    
+
     "crypto_wallets": {
         "root_wallet": {
             "address": "insert_crypto_wallet_address_here",
             "private_key": "insert_crypto_wallet_private_key_here"
         }
+    },
+
+    "images": {
+        
     }
 }

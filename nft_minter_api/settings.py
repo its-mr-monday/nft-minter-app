@@ -33,6 +33,15 @@ class settings:
 
     def set_root_user(self, username, password):
         self.settings["users"]["root_user"]["username"] = username
-        self.settings["users"]["root_user"]["password"] = password
+        self.settings["users"]["root_user"]["password"] = sha256_crypt.encrypt(password)
         self.save_settings()
+
+    def register_user(self, username, password):
+        if username in self.settings["users"]:
+            return None
+        user_id = len(self.settings["users"]) + 1
+
+        self.save_settings()
+
+    
     

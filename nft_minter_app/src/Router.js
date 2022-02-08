@@ -8,6 +8,7 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import LoginPage from './Views/LoginPage';
 import LandingPage from './Views/LandingPage';
+import UploadImage from "./Views/UploadImage";
 
 const Router = (props) => {
     let authed = props.authed;
@@ -26,6 +27,10 @@ const Router = (props) => {
 
                     <Route path="/" exact>
                         <LandingPage authed={authed} token={token} username={username}/>
+                    </Route>
+
+                    <Route path="/upload_image" exact>
+                        <UploadImage authed={authed} token={token} username={username}/>
                     </Route>
                 </Switch>
             </Router>

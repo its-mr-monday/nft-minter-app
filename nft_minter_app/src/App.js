@@ -6,7 +6,6 @@
     should have been included as part of this package
 */
 
-import logo from './logo.svg';
 import './App.css';
 import { positions, Provider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
@@ -37,6 +36,7 @@ const App = () => {
   
   return (
     <Provider template={AlertTemplate} {...options}>
+      <Navbar authed={authed} username={username} />
       <div className="App">
         <header className="App-header">
           <Router authed={authed} token={token} username={username} navigate={navigate} />

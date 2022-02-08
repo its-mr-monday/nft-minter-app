@@ -7,7 +7,6 @@
 */
 
 import axios from 'axios';
-import React from 'react';
 import { api_route } from './common';
 import { useAlert } from 'react-alert';
 

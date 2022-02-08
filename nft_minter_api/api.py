@@ -12,10 +12,12 @@ from minter import Minter
 from settings import settings
 from tokenManager import tokenManager
 import base64
+import os
 
 # Create the Flask app named 'api'
 def create_api():
     api = Flask(__name__)
+    api.config['IMAGES'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'nft_images')
     CORS(api)
     return api
 
@@ -65,6 +67,7 @@ def api_login():
 @api.route('/api/nft/link_wallet', methods=['POST'])
 
 #Upload a Image for Minting
+#We need to verify the image is a valid image
 @api.route('/api/nft/upload_image', methods=['POST'])
 def nft_upload_image():
     if request.headers.get('Authorization'):
