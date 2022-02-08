@@ -1,6 +1,8 @@
 import getpass
 import json
 import os
+import passlib.hash
+
 
 def set_settings(script_path):
     settings_file = os.path.join(script_path, 'nft_minter_api', 'settings.json')

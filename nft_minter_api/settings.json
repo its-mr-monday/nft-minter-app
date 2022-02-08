@@ -1,7 +1,16 @@
 {
     "secret_key": "insert_secret_key_here",
-    "root_user": {
-        "username": "insert_username_here",
-        "password": "insert_password_here"
+    "users" : {
+        "root_user": {
+            "user_id": "insert_root_user_id_here",
+            "username": "insert_username_here",
+            "password": "insert_password_here"
+        }
+    },
+    "crypto_wallet": {
+        "root_wallet": {
+            "address": "insert_crypto_wallet_address_here",
+            "private_key": "insert_crypto_wallet_private_key_here"
+        }
     }
 }

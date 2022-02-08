@@ -7,6 +7,7 @@
 '''
 
 import json
+import random
 
 class settings:
     def __init__(self):
@@ -23,4 +24,8 @@ class settings:
             json.dump(self.settings, outfile)
         return
 
+    def set_root_user(self, username, password):
+        self.settings["users"]["root_user"]["username"] = username
+        self.settings["users"]["root_user"]["password"] = password
+        self.save_settings()
     

@@ -16,3 +16,5 @@ class Minter:
     def __init__(self, settings):
         self.nft_images = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'nft_images')
         self.settings = settings
+
+    
