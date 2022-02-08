@@ -8,6 +8,7 @@
 
 import json
 import random
+from passlib.hash import sha256_crypt
 
 class settings:
     def __init__(self):
@@ -23,6 +24,12 @@ class settings:
         with open(self.settings_file, 'w') as outfile:
             json.dump(self.settings, outfile)
         return
+
+    def check_user(self, username, password):
+        if username in self.settings["users"]:
+            if sha256_crypt.verify(password, self.settings["users"][username]["password"]):
+                return self.settings["users"][username]["user_id"]
+        return None
 
     def set_root_user(self, username, password):
         self.settings["users"]["root_user"]["username"] = username

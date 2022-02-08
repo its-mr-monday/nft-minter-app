@@ -11,6 +11,7 @@ from flask_cors import CORS
 from minter import Minter
 from settings import settings
 from tokenManager import tokenManager
+import base64
 
 # Create the Flask app named 'api'
 def create_api():
@@ -21,12 +22,12 @@ def create_api():
 #Create a instance of the api object
 api = create_api()
 
-Settings = settings()
-Settings.load_settings()
+SettingsManager = settings()
+SettingsManager.load_settings()
 
 Mint = Minter()
 
-TokenManager = tokenManager(Settings['secret_key'])
+TokenManager = tokenManager(SettingsManager.settings['secret_key'])
 
 
 '''     API ROUTES     '''
@@ -36,7 +37,21 @@ TokenManager = tokenManager(Settings['secret_key'])
 #Login Api Route
 @api.route('/api/login', methods=['POST'])
 def api_login():
+    if request.is_json == False:
+        return {'message': 'Request Expects Json Data'}, 400
     data = request.json
+    username = data['username']
+    password = data['password']
+    uid = SettingsManager.check_user(username, password)
+    if uid != None:
+        token = TokenManager.create_token(uid, username)
+        
+        return {'message': f"Succesfully logged in as {username}",
+                'token': token
+                }, 200
+    
+    return {'message': 'Error invalid username or password!'}, 401
+
 
 
 #Logout Api Route
@@ -46,13 +61,29 @@ def api_login():
 
 #Minting Routes
 
+#Set Crypto Wallet Address
+@api.route('/api/nft/link_wallet', methods=['POST'])
 
-
-#Account Management
-
-#Set OpenSea Account
-@api.route('/api/nft/marketplace/login', methods=['POST'])
-
+#Upload a Image for Minting
+@api.route('/api/nft/upload_image', methods=['POST'])
+def nft_upload_image():
+    if request.headers.get('Authorization'):
+        token = request.headers.get('Authorization')[7:]
+        payload = TokenManager.validate_token(token)
+        if payload != None:
+            if request.is_json == False:
+                return {'message': 'Request Expects Json Data'}, 400
+            data = request.json
+            uid = payload['uid']
+            image_name = data['filename']
+            image_data = base64.b64decode(data['image']).encode('utf-8')
+            image_url = SettingsManager.upload_image(image_name, image_data)
+            if image_url != None:
+                return {'message': 'Image Uploaded',
+                        'image_url': image_url
+                        }, 200
+            return {'message': 'Error uploading image'}, 400
+        return {'message': 'Error invalid token'}, 401
 
 def run_api_debug():
     api.run(debug=True)

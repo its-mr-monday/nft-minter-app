@@ -5,3 +5,47 @@
     under the "MIT License Agreement". Please see the LICENSE file that 
     should have been included as part of this package
 */
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import LoginPage from './Views/LoginPage';
+import LandingPage from './Views/LandingPage';
+
+const Router = (props) => {
+    let authed = props.authed;
+    let navigate = props.navigate
+
+    if (authed === true) {
+        let token = props.token;
+        let username = props.username;
+
+        return (
+            <Router>
+                <Switch>
+                    <Route path="/logout" exact>
+                        
+                    </Route>
+
+                    <Route path="/" exact>
+                        <LandingPage authed={authed} token={token} username={username}/>
+                    </Route>
+                </Switch>
+            </Router>
+        );
+
+    } else {
+
+        return (
+            <Router>
+                <Switch>
+                    <Route path="/login" exact>
+                        <LoginPage authed={authed} navigate={navigate} />
+                    </Route>
+                    <Route path="/" exact>
+                        <LandingPage authed={authed} />
+                    </Route>
+                </Switch>
+            </Router>
+        );
+    }
+}
+
+export default Router;

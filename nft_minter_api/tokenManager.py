@@ -20,7 +20,7 @@ class tokenManager:
         payload = {
             'expiry': datetime.datetime.utcnow() + datetime.timedelta(days=1),
             'creation': datetime.datetime.utcnow(),
-            'suid': user_id,
+            'uid': user_id,
             'username': username
         }
 

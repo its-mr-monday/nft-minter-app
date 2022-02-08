@@ -8,25 +8,41 @@
 
 import logo from './logo.svg';
 import './App.css';
+import { positions, Provider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+import React, { useState, useEffect } from 'react';
+import { isAuthed, getToken, getUsername } from './Utils/common';
+import Router from Router;
+import { useNavigate } from 'react-router-dom';
+import Navbar from './Views/Navbar';
 
-function App() {
+const options = {
+  position: positions.TOP_CENTER,
+  timeout: 5000,
+  offset: "30px",
+  transition: "scale"
+}
+
+const App = () => {
+  const [authed, setAuthed] = useState(false);
+  setAuthed(isAuthed());
+  const [username, setUsername] = useState(null);
+  const [token, setToken] = useState(null);
+  const navigate = useNavigate();
+
+  if (authed === true) {
+    setUsername(getUsername());
+    setToken(getToken());
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider template={AlertTemplate} {...options}>
+      <div className="App">
+        <header className="App-header">
+          <Router authed={authed} token={token} username={username} navigate={navigate} />
+        </header>
+      </div>
+    </Provider>
   );
 }
 
