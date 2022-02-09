@@ -15,14 +15,15 @@ import Router from Router;
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Views/Navbar';
 
-const options = {
-  position: positions.TOP_CENTER,
-  timeout: 5000,
-  offset: "30px",
-  transition: "scale"
-}
-
 const App = () => {
+  //Options for the alert
+  let options = {
+    position: positions.TOP_CENTER,
+    timeout: 5000,
+    offset: "30px",
+    transition: "scale"
+  }
+  //Authed and session states
   const [authed, setAuthed] = useState(false);
   setAuthed(isAuthed());
   const [username, setUsername] = useState(null);
@@ -33,7 +34,7 @@ const App = () => {
     setUsername(getUsername());
     setToken(getToken());
   }
-  
+  //That beautiful App wrapped around our alert system
   return (
     <Provider template={AlertTemplate} {...options}>
       <Navbar authed={authed} username={username} />

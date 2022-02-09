@@ -6,7 +6,7 @@
     should have been included as part of this package
 '''
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from minter import Minter
 from settings import settings
@@ -67,6 +67,7 @@ def api_login():
 @api.route('/api/nft/link_wallet', methods=['POST'])
 
 #Upload a Image for Minting
+#inside the db we need "photo_id": { "photo_route" : route, "photo_name" : name }
 #We need to verify the image is a valid image
 @api.route('/api/nft/upload_image', methods=['POST'])
 def nft_upload_image():
@@ -86,8 +87,16 @@ def nft_upload_image():
                         'image_url': image_url
                         }, 200
             return {'message': 'Error uploading image'}, 400
-        return {'message': 'Error invalid token'}, 401
+    return {'message': 'Error invalid token'}, 401
 
+@api.route('/api/nft/view_image/<image_name>', methods=['GET'])
+def nft_view_image(image_name):
+    if request.headers.get('Authorization'):
+        token = request.headers.get('Authorization')[7:]
+        payload = TokenManager.validate_token(token)
+
+    return {'message': 'Error invalid token'}, 401
+    
 def run_api_debug():
     api.run(debug=True)
 
